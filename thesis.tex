@@ -1,0 +1,210 @@
+\documentclass[a4paper,twoside,12pt]{report}
+% rubber: setlist arguments --shell-escape -synctex=1
+
+\input{preamble.tex}
+%% This code creates the groups
+% -----------------------------------------
+\usepackage{etoolbox}
+\renewcommand\nomgroup[1]{%
+	\item[\bfseries
+	\ifstrequal{#1}{G}{Mathematical Notation}{%
+	\ifstrequal{#1}{I}{Images}{%
+	\ifstrequal{#1}{M}{Machine Learning}{%
+	\ifstrequal{#1}{O}{Other Symbols}{%
+	}}}}%
+	]}
+% -----------------------------------------
+
+\newcommand{\p}{} % This a horrible way to do it, rather use: \setlength{\parskip}{11pt}
+\newcommand{\x}{\vec{x}}
+\newcommand{\y}{\vec{y}}
+\newcommand{\grad}{\bigtriangledown}
+\newcommand{\ith}{^{\mbox{\scriptsize th}}}
+
+\newcommand{\witsat}{\textsc{WITSat}}
+\newcommand{\witsdb}{\textsc{WITSdb}}
+\newcommand{\pos}{\phantom{\neg}}%
+\newcommand{\XX}{XX \todo{update}}
+
+\renewcommand{\Re}{\mathbb{R}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\G}{\mathbf{G}}
+\newcommand{\B}{\mathbf{B}}
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\II}{\mathbf{II}}
+
+
+\pagestyle{headings}
+
+\pagestyle{plain}
+\pagenumbering{roman}
+
+\renewenvironment{abstract}{\ \vfill\begin{center}\textbf{Abstract}\end{center}\addcontentsline{toc}{section}{Abstract}}{\vfill\vfill\newpage}
+\newenvironment{declaration}{\ \vfill\begin{center}\textbf{Declaration}\end{center}\addcontentsline{toc}{section}{Declaration}}{\vfill\vfill\newpage}
+\newenvironment{acknowledgements}{\ \vfill\begin{center}\textbf{Acknowledgements}\end{center}\addcontentsline{toc}{section}{Acknowledgements}}{\vfill\vfill\newpage}
+\newenvironment{publications}{\ \vfill\begin{center}\textbf{Publications}\end{center}\addcontentsline{toc}{section}{Publications}}{\vfill\vfill\newpage}
+
+%\newcommand{\morecitations}{\color{blue}[?? MORE CITATION NEEDED ??]\color{black}}
+%\newcommand{\comment}[1]{\color{blue}[COMMENT??: #1]\color{black}}
+
+\begin{document}
+\onecolumn
+\thispagestyle{empty}
+
+
+\setcounter{page}{0}
+\addcontentsline{toc}{chapter}{Preface}
+\ 
+\begin{center}
+  
+  {
+  \Large \bf \sc The Wits~Intelligent~Teaching~System~(WITS)\\
+  \large A Smart Lecture Theatre to Assess Audience Engagement\\[20pt]
+  \large School of Computer Science and Applied Mathematics\\
+  \large University of the Witwatersrand\\[20pt]
+  \normalsize
+  Richard Klein\\
+  0707074G\\[20pt]
+  Supervised by\\Prof Turgay Celik\\[10pt]
+  \today
+  }
+%\end{center}
+  \vfill
+  \includegraphics[width=4cm]{images/wits}
+  \vfill
+%\begin{center}
+
+  %{\scriptsize \input{version.tex}} % Add or remove for GIT versioning
+  \vfill
+  A Thesis submitted to the Faculty of Science, University of the Witwatersrand, Johannesburg, in fulfilment of the requirements for the degree of Doctor of Philosophy\\[10pt]
+  \small{Ethics Clearance Number: H14/03/06}\\
+\end{center}
+\vfill
+\newpage
+
+\pagestyle{plain}
+%\addtocontents{toc}{\protect\contentsline{chapter}{Preface}{}{Doc-Start}}
+%\addcontentsline{toc}{chapter}{Preface}
+%\contentsline {chapter}{Preface}{}{Doc-Start}
+\setcounter{page}{1}
+
+\phantomsection
+\begin{abstract}
+\small
+The utility of lectures is directly related to the engagement of the students therein.
+To ensure the value of lectures, one needs to be certain that they are engaging to students.
+In small classes experienced lecturers develop an intuition of how engaged the class is as a whole and can then react appropriately to remedy the situation through various strategies such as breaks or changes in style, pace and content.
+As both the number of students and size of the venue grow, this type of contingent teaching becomes increasingly difficult and less precise.
+Furthermore, relying on intuition alone gives no way to recall and analyse previous classes or to objectively investigate trends over time.
+To address these problems this thesis presents the \textsc{Wits Intelligent Teaching System (WITS)} to highlight disengaged students during class.
+%WITS uses computer vision and machine learning techniques on video data collected during lectures.
+%This data is analysed and WITS reports back about student engagement through an Interest Map that highlights disengaged students.
+
+A web-based, mobile application called Engage was developed to try elicit anonymous engagement information directly from students.
+The majority of students were unwilling or unable to self-report their engagement levels during class.
+This stems from a number of cultural and practical issues related to social display rules, unreliable internet connections, data costs, and distractions.
+This result highlights the need for a non-intrusive system that does not require the active participation of students.
+A non-intrusive, computer vision and machine learning based approach is therefore proposed.
+
+To support the development thereof, a labelled video dataset of students was built by recording a number of first year lectures.
+Students were labelled across a number of affects -- including boredom, frustration, confusion, and fatigue -- but poor inter-rater reliability meant that these labels could not be used as ground truth.
+Based on manual coding methods identified in the literature, a number of actions, gestures, and postures were identified as proxies of behavioural engagement.
+These proxies are then used in an observational checklist to mark students as engaged or not.
+
+A Support Vector Machine (SVM) was trained on Histograms of Oriented Gradients (HOG) to classify the students based on the identified behaviours.
+The results suggest a high temporal correlation of a single subject's video frames.
+This leads to extremely high accuracies on seen subjects.
+However, this approach generalised poorly to unseen subjects and more careful feature engineering is required.
+The use of Convolutional Neural Networks (CNNs) improved the classification accuracy substantially, both over a single subject and when generalising to unseen subjects.
+While more computationally expensive than the SVM, the CNN approach lends itself to parallelism using Graphics Processing Units (GPUs).
+With GPU hardware acceleration, the system is able to run in near real-time and with further optimisations a real-time classifier is feasible.
+
+The classifier provides engagement values, which can be displayed to the lecturer live during class.
+This information is displayed as an Interest Map which highlights spatial areas of disengagement.
+The lecturer can then make informed decisions about how to progress with the class, what teaching styles to employ, and on which students to focus.
+An Interest Map was presented to lecturers and professors at the University of the Witwatersrand yielding 131 responses.
+The vast majority of respondents indicated that they would like to receive live engagement feedback during class, that they found the Interest Map an intuitive visualisation tool, and that they would be interested in using such technology.
+
+Contributions of this thesis include the development of a labelled video dataset; the development of a web based system to allow students to self-report engagement; the development of cross-platform, open-source software for spatial, action and affect labelling; the application of Histogram of Oriented Gradient based Support Vector Machines, and Deep Convolutional Neural Networks to classify this data; the development of an Interest Map to intuitively display engagement information to presenters; and finally an analysis of acceptance of such a system by educators.
+\end{abstract}
+
+\phantomsection
+\begin{declaration}
+I declare that this thesis is my own, unaided work. It is being submitted for the Degree of Doctor of
+Philosophy at the University of the Witwatersrand, Johannesburg. It has not been submitted before
+for any degree or examination at any other University.
+
+%\noindent \includegraphics[width=3cm]{images/sig}\\
+% Name\\
+\today
+
+\end{declaration}
+\ 
+\vfill
+\begin{center}
+	\itshape
+	Dedication
+\end{center}
+\vfill
+\vfill
+\vfill
+\newpage
+\phantomsection
+\begin{acknowledgements}
+Ack.
+\end{acknowledgements}
+
+\phantomsection
+\addcontentsline{toc}{section}{Table of Contents}
+\tableofcontents
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+\newpage
+%\listoftodos
+%\newpage
+
+\phantomsection
+\addcontentsline{toc}{section}{Nomenclature}
+
+\setlength{\nomlabelwidth}{2cm}
+%\renewcommand{\nompreamble}{A lower case, light (non-boldface) letter -- such as $x,y,z,x_i$ -- is a real number.\\A lower case, boldface letter -- such as $\mathbf{x,y,z,x_i}$ -- is a vector.\\An upper case, light letter -- such as $X,Y,Z$ -- is a set.\\An upper case, boldface letter -- such as $\mathbf{X,Y,Z}$ -- is a matrix.}
+
+\nomenclature[G, 01]{$\mathbf{A,B,W}$}{An upper case, boldface letter is a matrix.}%
+\nomenclature[G, 02]{$X,Y,Z$}{An upper case, light (non-boldface) letter is a set.}%
+
+
+\nomenclature[I, 01]{$\mathbb{D}$}{A dataset.}%
+\nomenclature[I, 02]{$\mathbf{I}$}{An image or image sequence in dataset $\mathbb{D}$.}%
+\nomenclature[I, 03]{$\mathbf{I}(x,y)$}{The pixel value at position $(x,y)$ of some image $\mathbf{I}$.}%
+
+
+\printnomenclature
+
+\newpage 
+~\thispagestyle{empty}\newpage
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+
+\section{Introduction}
+\lettrine{S}{tudent} engagement is a pivotal concept when considering the utility of lectures.
+In an age where even tertiary level content is available online, it becomes important for instructors to differentiate themselves from online content sources.
+This is particularly true when teaching large classes where interaction with the presenter is already limited.
+
+\begin{cpp}
+int main(){
+	cout << "Hello World" << endl;
+}
+\end{cpp}
+
+
+\nocite{*}
+
+\bibliography{references}\addcontentsline{toc}{chapter}{References}
+\end{document}
