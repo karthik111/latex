@@ -5,6 +5,53 @@
 %% This code creates the groups
 % -----------------------------------------
 \usepackage{etoolbox}
+\usepackage{wrapfig}
+\usepackage{smartdiagram}
+\usesmartdiagramlibrary{additions}
+\usetikzlibrary{arrows}
+\usepackage{graphicx}
+%\usepackage{subcaption}
+\usepackage{subfig} % for subfigures
+\usepackage  [font={small,it}] {caption}
+\usepackage{lipsum}
+
+\usepackage{listings}
+\usepackage{color}
+
+%% Settings for pretty printing of source code
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+%%  Source code formatting setting ends. 
+
 \renewcommand\nomgroup[1]{%
 	\item[\bfseries
 	\ifstrequal{#1}{G}{Mathematical Notation}{%
@@ -33,6 +80,7 @@
 \newcommand{\I}{\mathbf{I}}
 \newcommand{\II}{\mathbf{II}}
 
+\usepackage[superscript,biblabel]{cite}
 
 \pagestyle{headings}
 
@@ -58,14 +106,14 @@
 \begin{center}
   
   {
-  \Large \bf \sc The Wits~Intelligent~Teaching~System~(WITS)\\
-  \large A Smart Lecture Theatre to Assess Audience Engagement\\[20pt]
+%  \Large \bf \sc The Wits~Intelligent~Teaching~System~(WITS)\\
+  \large Machine Learning for classification of  {\itshape Mycobacterium Tuberculosis (TB) } cultures to assist disease diagnostics\\[20pt]
   \large School of Computer Science and Applied Mathematics\\
   \large University of the Witwatersrand\\[20pt]
   \normalsize
-  Richard Klein\\
-  0707074G\\[20pt]
-  Supervised by\\Prof Turgay Celik\\[10pt]
+  Karthikeyan Venkataraman\\
+  1817218\\[20pt]
+  Supervised by\\Prof Richard Klein\\[10pt]
   \today
   }
 %\end{center}
@@ -76,7 +124,7 @@
 
   %{\scriptsize \input{version.tex}} % Add or remove for GIT versioning
   \vfill
-  A Thesis submitted to the Faculty of Science, University of the Witwatersrand, Johannesburg, in fulfilment of the requirements for the degree of Doctor of Philosophy\\[10pt]
+  A Thesis submitted to the Faculty of Science, University of the Witwatersrand, Johannesburg, in fulfilment of the requirements for the degree of Master of Computer Science\\[10pt]
   \small{Ethics Clearance Number: H14/03/06}\\
 \end{center}
 \vfill
@@ -91,47 +139,45 @@
 \phantomsection
 \begin{abstract}
 \small
-The utility of lectures is directly related to the engagement of the students therein.
-To ensure the value of lectures, one needs to be certain that they are engaging to students.
-In small classes experienced lecturers develop an intuition of how engaged the class is as a whole and can then react appropriately to remedy the situation through various strategies such as breaks or changes in style, pace and content.
-As both the number of students and size of the venue grow, this type of contingent teaching becomes increasingly difficult and less precise.
-Furthermore, relying on intuition alone gives no way to recall and analyse previous classes or to objectively investigate trends over time.
-To address these problems this thesis presents the \textsc{Wits Intelligent Teaching System (WITS)} to highlight disengaged students during class.
-%WITS uses computer vision and machine learning techniques on video data collected during lectures.
-%This data is analysed and WITS reports back about student engagement through an Interest Map that highlights disengaged students.
+Automated image classification of {\itshape Mycobacterium tuberculosis (TB) } culture samples using machine learning algorithms can potentially compliment the current manual diagnostic processes which are prevalent today.    In this instance, the process of capturing and analysing images of TB samples is done manually at the NHS Labs in Johannesburg.      It was felt that introduction of machine learning and artificial intelligence techniques could alleviate the current human workload on the researchers that work at the NHS Labs.
 
-A web-based, mobile application called Engage was developed to try elicit anonymous engagement information directly from students.
-The majority of students were unwilling or unable to self-report their engagement levels during class.
-This stems from a number of cultural and practical issues related to social display rules, unreliable internet connections, data costs, and distractions.
-This result highlights the need for a non-intrusive system that does not require the active participation of students.
-A non-intrusive, computer vision and machine learning based approach is therefore proposed.
+My work provides a quantitative assessment of whether this is indeed possible and whether machine learning techniques are at a state of readiness where they can be included within a human diagnostic process such the one above.
 
-To support the development thereof, a labelled video dataset of students was built by recording a number of first year lectures.
-Students were labelled across a number of affects -- including boredom, frustration, confusion, and fatigue -- but poor inter-rater reliability meant that these labels could not be used as ground truth.
-Based on manual coding methods identified in the literature, a number of actions, gestures, and postures were identified as proxies of behavioural engagement.
-These proxies are then used in an observational checklist to mark students as engaged or not.
+The analysis and outcome of my work is structured along the following lines: 
+\begin{enumerate}
+\item A description of the current process of manual data capture and classification of TB culture samples into their respective categories. 
+\item An outline of the mobile application that can developed using the Machine Learning (ML) programs provided to automate this process at scale.  This proposed mobile application is expected to provide specific benefits that are also outlined. 
+\item The Data Gathering method adopted and the associated Feature Extraction techniques applied on the data.     A description of the Image Processing and Computer Vision techniques used for Feature Extraction is described. 
+\item The ML programs that performed the Learning and Classification tasks using the data gathered in the above step.   Two specific ML algorithms were chosen, namely
+\begin{enumerate}
+\item Probabilistic classification using Mixture of Gaussians (MoG) 
+\item Random Forest classification 
+\end{enumerate}
+\item The rationale behind using these algorithms along with a description of their behaviour on the chosen data set is described in order to obtain an in-depth understanding of the performance on the classification task. 
+\item 
+Full source code, documentation and execution steps have been uploaded to Github to encourage further research and application development using the programs provided.   The systems is designed in a modular manner allowing any other ML program to be plugged in. 
+The design of the Machine Learning application that was developed using these algorithms is described in terms of the key system components.     
 
-A Support Vector Machine (SVM) was trained on Histograms of Oriented Gradients (HOG) to classify the students based on the identified behaviours.
-The results suggest a high temporal correlation of a single subject's video frames.
-This leads to extremely high accuracies on seen subjects.
-However, this approach generalised poorly to unseen subjects and more careful feature engineering is required.
-The use of Convolutional Neural Networks (CNNs) improved the classification accuracy substantially, both over a single subject and when generalising to unseen subjects.
-While more computationally expensive than the SVM, the CNN approach lends itself to parallelism using Graphics Processing Units (GPUs).
-With GPU hardware acceleration, the system is able to run in near real-time and with further optimisations a real-time classifier is feasible.
+The accompanying implementation in Python 3.0 provides a complete Data Processing and Classification Pipeline with the software components listed below. 
 
-The classifier provides engagement values, which can be displayed to the lecturer live during class.
-This information is displayed as an Interest Map which highlights spatial areas of disengagement.
-The lecturer can then make informed decisions about how to progress with the class, what teaching styles to employ, and on which students to focus.
-An Interest Map was presented to lecturers and professors at the University of the Witwatersrand yielding 131 responses.
-The vast majority of respondents indicated that they would like to receive live engagement feedback during class, that they found the Interest Map an intuitive visualisation tool, and that they would be interested in using such technology.
+\begin{enumerate}
+\item Image Processing on pictures of TB culture samples taken with a Samsung mobile phone camera. 
+\item Feature Extraction 
+\item Model Training on training data set
+\item Grid Search on validation data set
+\item Inferencing on test data set
+\item Confusion Matrix for classification accuracy analysis
 
-Contributions of this thesis include the development of a labelled video dataset; the development of a web based system to allow students to self-report engagement; the development of cross-platform, open-source software for spatial, action and affect labelling; the application of Histogram of Oriented Gradient based Support Vector Machines, and Deep Convolutional Neural Networks to classify this data; the development of an Interest Map to intuitively display engagement information to presenters; and finally an analysis of acceptance of such a system by educators.
+\end{enumerate}
+\item Analysis of the results obtained by each of the ML learning approaches in terms of classification accuracy and execution timings for both training along with reasons behind the same. 
+\item Recommendations on the way forward in terms of usage, further projected improvement in classification accuracy anticipated by other techniques beyond the ones implemented are discussed. 
+\end{enumerate}
+
 \end{abstract}
 
 \phantomsection
 \begin{declaration}
-I declare that this thesis is my own, unaided work. It is being submitted for the Degree of Doctor of
-Philosophy at the University of the Witwatersrand, Johannesburg. It has not been submitted before
+I declare that this thesis is my own, unaided work. It is being submitted for the Degree of Master of Science at the University of the Witwatersrand, Johannesburg. It has not been submitted before
 for any degree or examination at any other University.
 
 %\noindent \includegraphics[width=3cm]{images/sig}\\
@@ -144,6 +190,11 @@ for any degree or examination at any other University.
 \begin{center}
 	\itshape
 	Dedication
+
+To my dear wife Priya, children Arhant, Himani, and my mother, Sarala whose love, support and patience allows me to pursue my passion for lifelong exploration and learning.  
+
+To  also my younger brother, Srihari, whose dedication to his profession and service to our country, has been a continuing source of inspiration to me in my own lesser endevours. 
+
 \end{center}
 \vfill
 \vfill
@@ -151,7 +202,12 @@ for any degree or examination at any other University.
 \newpage
 \phantomsection
 \begin{acknowledgements}
-Ack.
+I would like to place on record my sincere thanks to the following individuals who made this possible: 
+
+1.  Pravesh Ranchod, Senior Lecturer, Wits University for coming up with the idea of this project and put me in touch with the NHLS Labs.   Pravesh's guidance, patience and ever-friendly spirit in fielding so many of my questions around the program during the beginning of 2017 was a key factor in my decision to embark on this Master's program while working full time at IBM.    
+
+2.  Julian Peters and the rest of the team at the NHLS Labs for letting me have a glimpse of their world of TB diagostics and research and explaining their current process to me.    As I worked through the system implementation, I continued to reach out to Julian for clarifications and validation of the early results as I worked on multiple approaches
+
 \end{acknowledgements}
 
 \phantomsection
@@ -190,21 +246,714 @@ Ack.
 ~\thispagestyle{empty}\newpage
 \pagenumbering{arabic}
 
-\chapter{Introduction}
+\chapter {The TB Culture Classification Process}
+\lettrine{M}{ycobacteria} Growth Indicator Tube (MGIT) is a clinical method used in the detection and recovery of mycobacteria. The MGIT Mycobacteria Growth Indicator Tube contains 4 mL of a chemical compound called modified Middlebrook 7H9 Broth base to which the sputum sample of the patient is added. This medium is one of the most commonly used liquid media for the cultivation of mycobacteria.
 
-\section{Introduction}
-\lettrine{S}{tudent} engagement is a pivotal concept when considering the utility of lectures.
-In an age where even tertiary level content is available online, it becomes important for instructors to differentiate themselves from online content sources.
-This is particularly true when teaching large classes where interaction with the presenter is already limited.
+At the National Health Laboratory Service (NHLS) in Johannesburg, TB culture samples are prepared and analysed using a method called Most Probable Number (MPN) limiting dilution assays.   Earlier, pictures of the culture samples were taken weekly, however due to high sample numbers, pictures are now taken once in six weeks which is equivalent to MGIT culture incubation that is widely used clinically.      
 
-\begin{cpp}
-int main(){
-	cout << "Hello World" << endl;
+Approximately 50 samples per week are analysed for results with sample collections numbering around 10 samples per day.
+
+All types of clinical specimens, pulmonary as well as extra-pulmonary (except blood and urine), can be processed for primary isolation in the MGIT tube using conventional methods. After processed specimen is inoculated, MGIT tube must be continuously monitored either manually or by automated instruments until positive or the end of the testing protocol.
+
+Two plates are prepared for each sample as described below:
+\begin{enumerate}
+\item An RG / BG plate: Certain resuscitation factors (catalyst compounds) are added to the sample to help the growth of differentially culturable bacteria, if any.  
+\item A Media plate: No resuscitation factors are added to this plate and this serves as a control group to assess growth of bacteria without the presence of any resuscitation factors.   In the field (outside the labs), only the media plate is used to assess the growth of M. tuberculosis in the mycobacterial growth index tube (MGIT) culture. This perhaps explains the lower detection rate and the longer time to MGIT posistivity in clinical settings.
+\end{enumerate}
+
+The plate consists of 6 rows (A through F) and 8 columns (1 through 8).    
+
+In the RG/BG plate, the top 3 rows (A, B, C) are given the RV catalyst factor and the bottom 3 rows (D, E, F) are given the BG factor.  A volume of 450 micro-litre of each respective liquid experiment (RV, BG or media) is dispensed into the appropriate wells. A volume of 50 micro-litre of decontaminated patient sputum is added to the first column (1) and this is adequately mixed by using a multi-channel pipette. A 10-fold serial dilution of the mixed sample is carried out in subsequent columns by transferring 50 micro-litre of each mixed column to the next column resulting in one-tenth of the concentration of bacteria from the previous cp;'[olumn.    
+
+Therefore, when a well flags positive, it gives an indication of the presence of replicating bacteria in under varying conditions (high to low degrees of presence of resuscitating factors)
+
+At the end of the 6 week period, the presence of cloudy or clear samples are counted within the plate and are entered into an MPN calculator which provides an estimate (probabilistic) of the presence of absence of TB in the samples including confidence intervals.    A larger number of cloudy results reduce the boundaries of the confidence intervals. Both RG/BG and Media plate observations are used by the MPN formula in its inference model. 
+
+Black or Orange samples indicate contamination and these are counted as well. 
+\setlength{\fboxsep}{0pt}%
+\setlength{\fboxrule}{1.5pt}%
+
+\begin{figure}
+\centering
+ \fbox{\includegraphics[width=12cm]{images/fig1-TruePositives}}
+\caption[Positive samples] {Positive samples – notice cloudy formation on many of the wells}
+\end{figure}
+
+\begin{figure}
+\centering
+ \fbox{\includegraphics[width=12cm]{images/fig2-NegativeSample}}
+\caption[Negative samples] {Negative samples – no coloration within any of the wells after 6 weeks}
+\end{figure}
+
+\begin{figure}
+\centering
+ \fbox{\includegraphics[width=12cm]{images/CondensationSample}}
+\caption[Condensation or Water samples] {Condensation or formation of water bubbles on samples can result in false positives.  These are to be distinguished from the true positives or cloudy samples shown in Fig 1.1}
+\end{figure}
+
+\begin{figure}
+\centering
+ \fbox{\includegraphics[width=12cm]{images/ContaminatedSample}}
+\caption[Contaminated samples] {Contaminated samples – Black and Orange colorations indicate contamination}
+\end{figure}
+
+\begin{figure}
+\centering
+ \fbox{\includegraphics[width=12cm]{images/PatientLabel}}
+\caption[Patient Label on samples] {Labels that are affixed to each sample to identify patient and sample number. Any one of R\# or \#CP may be used to identify the patient}
+\end{figure}
+
+\chapter{System Design and Expected Benefits}
+
+\section{Key System Components}
+The three primary components of the proposed system are shown below. The current project focussed on the second and perhaps the most significant aspect of the system which is to use machine learning techniques to process and classify the image accurately. 
+
+%\begin{center}
+\smartdiagramset{
+descriptive items y sep=3.2cm,
+description title width=3cm,
+description text width=12cm
 }
-\end{cpp}
+
+\smartdiagram[descriptive diagram]{
+{Capture Plate Image,{Camera function within an app running on any mobile device like an Android or iPhone. User enters patient number in a textbox within the mobile application. }},
+{Process Image, {Process the image to extract relevant features and apply Machine Learning algorithms to classify into one of four categories}},
+{Save results, {Save to a file on the device and optionally email it.    This output once received by the user is then saved to a laptop or desktop where subsequent steps will be done by the user such as entering the saved values into the existing MPN program. }},
+}
+%\end{center}
+
+\section{Expended benefits of the system}
+
+\begin{enumerate}
+\item Avoid variance and errors in human measurements.   Different people analysing the same plate have been shown to arrive at different results
+\item The task of image classification and counting is mundane.  The scarce time of researchers can be used productively elsewhere. 
+50 samples = 2 images per sample = 5 minutes to process each sample (scoring, writing down) and populate result table -  50 * 5 = 250 minutes per week = 4 hours per week as a representative measure of effort saved as a result of machine learning based automation.
+\item Create a scalable process that does not increase human effort linearly as the number of samples increase. 
+\end{enumerate}
+
+\chapter{Data Preparation and Feature Extraction}
+
+A modular and repeatable data flow pipleline has been developed that allows the training data features to be used across different types of models.    This allows for significant reuse as the data collection and feature extraction which forms the bulk of a machine learning project can be easily substituted into an ML model that is different from this particular project. 
+
+The data flow and machine learning model pipeline developed for this project is shown in the diagram below.   Subsequent sections will describe the specific strategies adopted for each stage of the pipeline,  key observations and results in each stage and the interfacing mechanism between consecutive stages: 
+
+\begin{figure}[!htbp]
+\centering
+%\fbox{}
+\caption[Data flow pipeline] {Data flow pipeline developed}
+\smartdiagramset {back arrow disabled = true, text width=5cm, uniform arrow color=true}
+\smartdiagram [flow diagram:vertical]{Load Training Data,Feature Extraction, Model Training, Inference Making, Confusion Matrix} 
+\end{figure}
+
+The Load Training Data and Feature Extraction steps are a one-time activity and the features extracted and stored therein can be used in any in any of the machine learning models that are available.  For the purposes of this project, the GMM and Random Forest classifiers were used as will be outlined in the following sections. 
+
+\section{Obtaining, Processing and Loading Training Data} 
+A total of 659 images of TB cultures were obtained from the NHLS.   Of these a small sample of images chosen as Training Data and emphasis was laid on selecting a representative set of training images that provided samples for each of the 4 classes of interest described earlier.  It must be noted that each training image provided 48 training samples as each image as 6 rows and 8 columns of samples (or wells) within a given image.  
+
+The training labels of each of the samples was defined in an accompanying spreadsheet as shown below. 
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Training labels in an xls]{\label{fig:mdright}{\includegraphics[width=0.48\textwidth]{images/labelled_data}}}\hfill
+\subfloat[Training image: DSC05817.JPG]{\label{fig:mdleft}{\includegraphics[width=0.48\textwidth]{images/DSC05817}}}
+\caption{A training pair for classification - Labels for each training image sample}
+\label{fig:subfigures}
+\end{figure}
+
+Notice the degree of similarity between the W labelled samples (Water or Condensation samples) and N (Negative samples).   This close similarity will be an interesting source of classification errors as we will discuss further in the results section. 
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Another sheet of labelled data within a training image]{\label{fig:mdright}{\includegraphics[width=0.48\textwidth]{images/labelled_data_05822}}}\hfill
+\subfloat[Training image: DSC05822.JPG]{\label{fig:mdleft}{\includegraphics[width=0.48\textwidth]{images/DSC05822_copy}}}
+\caption{Another training pair for with Positive, Negative and Contaminated samples - Look for any visible distinguishing features between Positive and Negative samples}
+\label{fig:subfigures}
+\end{figure}
+
+\section{Identifying regions of interest and Feature Extraction} 
+
+The first task in Feature Extraction was to identify regions of interest within each image.   Clearly, only the wells themselves within each culture image are of interest in the classification task.    Each well is a circular or near circular image.  That part of the image which falls outside of any well is not of interest for the learning and classification task.    Therefore, the first task in the Feature Extraction task was to find a way by which the 48 wells within each image could be identified.  
+
+\subsection{Well detection with Hough Circles} 
+The Hough Circle Detection algorithm was used to detect the shapes of the wells.  A heuristic approach was used to find the right combination of parameters for the OpenCV function to detect the circles representing the wells.  
+Each of the 48 wells were there programmatically provided a name in a (row, column) format representing the row and the column within the training image that that the well belonged to.  This identifier for each well was then used to uniquely identify each well within all the training images.    
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Enclosing circles on each of the 48 wells]{\label{fig:mdright}{\includegraphics[width=0.48\textwidth]{images/hough_circles}}}\hfill
+\subfloat[Each well identified with a (row, column) format]{\label{fig:mdleft}{\includegraphics[width=0.48\textwidth]{images/well_labels}}}
+\caption{OpenCV HoughCircles to identify and name the wells within each training image}
+\label{fig:subfigures}
+\end{figure}
+
+
+\subsection{Extracting Pixels within the Well using Masking} 
+A masking appoach was used to extract the pixels within the well.   After identifying each of the wells using Hough Circles, the wells were drawn in White over a Black background representing the image.    This resulted in 48 white wells drawn over a black background.    This is shown in the figure below. 
+
+The mask was then used to read the pixel values within each of the outlined circles.   Once a mask was used, the area within the well could be identified as below.   The masks used are shown below.   Obviously, separate masks are created for each culture image. Using this mask then allowed the easy reading of each pixel value within the well using the code below 
+
+\lstinputlisting[language=Python, firstline=251, lastline=258, frame=single]
+{code/load_training_data.py}
+
+resulting in the pixel values being obtained for each well.  See sample image below where the pixel values for the well (‘A’, 1) has been isolated. 
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Masks for each well in the image]{\label{fig:mdright}{\includegraphics[width=0.45\textwidth]{images/image_mask}}}\hfill
+\subfloat[Using the mask to extract pixel data for well (A,1) ]{\label{fig:mdleft}{\includegraphics[width=0.45\textwidth, height=4cm]{images/well_mask_copy}}}
+\caption{Use of Masks to obtain pixel values from grayscale representations of a well in an image}
+\label{fig:subfigures}
+\end{figure}
+
+\subsection{Feature Minimization using Histogram based approaches} 
+
+There are approximately 70,000 pixels within each image of a well.   Each pixel contains the grayscale value (between 0 and 255) and each such pixel represents a unique feature. 
+Initial attempts in using the Expectation Maximization (EM) algorithm to model the underlying stochastic process in the distribution of pixel values using a Mixture of Gaussian (MoG) model took an inordinately long time to execute on a persona computing device.    Clearly this approach was untenable using off the shelf hardware devices.   Hence, a feature reduction technique was adopted. 
+
+Histograms of the pixel values were analysed and the following trends in the grayscale values of the pixels were observed.    The hypothesis here was that Positive classes will generally exhibit a higher proportion of lighter colour pixels, due to the cloudy formations in the wells, as compared to the other classes.   The histograms were initially designed with 25 bins and are shown below. 
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Histogram representation]{\label{fig:mdright}{\includegraphics[width=0.48\textwidth]{images/pos_hist}}}\hfill
+\subfloat[Line graph representation]{\label{fig:mdleft}{\includegraphics[width=0.48\textwidth, height=4cm]{images/pos_line_graph}}}
+\caption{25 Bin Histogram of Grayscale Values for Positive samples}
+\label{fig:subfigures}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Histogram representation]{\label{fig:mdright}{\includegraphics[width=0.48\textwidth]{images/pos_hist_1}}}\hfill
+\subfloat[Line graph representation]{\label{fig:mdleft}{\includegraphics[width=0.48\textwidth]{images/pos_line_graph_1}}}
+\caption{25 Bin Histogram of Grayscale Values for Positive samples}
+\label{fig:subfigures}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Histogram representation]{\label{fig:mdright}{\includegraphics[width=0.48\textwidth]{images/neg_hist_1}}}\hfill
+\subfloat[Line graph representation]{\label{fig:mdleft}{\includegraphics[width=0.48\textwidth]{images/neg_line_graph_1}}}
+\caption{25 Bin Histogram of Grayscale Values for Negative samples}
+\label{fig:subfigures}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Histogram representation]{\label{fig:mdright}{\includegraphics[width=0.48\textwidth]{images/neg_hist_2}}}\hfill
+\subfloat[Line graph representation]{\label{fig:mdleft}{\includegraphics[width=0.48\textwidth]{images/neg_line_graph_2}}}
+\caption{25 Bin Histogram of Grayscale Values for Negative samples}
+\label{fig:subfigures}
+\end{figure}
+
+
+\subsection{Feature Engineering Using textures of each well} 
+
+Image textures provide information about the spatial arrangement of color or pixel intensities in an image or selected areas of an image.    In this project, it was hypothesized that Image Textures could provide a useful feature to use in the learning and classification process.     
+
+An LBP (Local Binary Pattern) descriptor was used to analyze the texture within the different class types.  The LBP operator returns a discrete value at each pixel that characterizes the local texture in a way that is partially invariant to luminance changes.  
+
+The basic LBP operator compares the eight neighboring pixel intensities to the center pixel intensity, assigning a 0 or a 1 to each neighbor depending on whether
+they are less than or greater than the center value.   The neighbouring 24 pixels around every pixel were examined around each point within a well. 
+
+\lstinputlisting[language=Python, firstline=28, lastline=32, frame=single]
+{code/hsv_test.py}
+
+Any analysis of the results of the LBP histograms was done to highlight the Edges, Flat surfaces and Corners of the images, with the hypothesis that a Positive wells will have more edges and corners due to the cloudy formations while Negative images will have a higher proportion of flat surfaces. 
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=12cm]{images/lbp_pos1}}
+\caption[LBP for a Positive well sample] {LBP for a Positive well sample: Proportion of Edges and Corners are expected to be higher than a Negative sample.  Notice the presence of edges due to cloudy formations on a positive sample.  }
+\end{figure}
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=8cm]{images/lbp_pos1_hist}}
+\caption[LBP Histogram for a Positive well sample] {LBP Histogram for a Positive well sample: Used as a Feature for training the model}
+\end{figure}
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=12cm]{images/lbp_pos2}}
+\caption[LBP for another Positive well sample] {LBP for another Positive well sample: Proportion of Edges and Corners are expected to be higher than a negative sample. Notice the presence of edges due to cloudy formations on a positive sample.  }
+\end{figure}
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=12cm]{images/lbp_neg1}}
+\caption[LBP for a Negative well sample] {LBP for a Negative well sample: Proportion of Flat regions are expected to be higher than a positive sample.  Notice the lack of edges.   The crescent shaped edges are due to reflection of light on this particular negative image sample.  Reflection of light can be mistook as a texture difference between wells}
+\end{figure}
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=12cm]{images/lbp_neg2}}
+\caption[LBP for another Negative well sample] {LBP for another Negative well sample: Proportion of Flat regions are expected to be higher than a positive sample.  Notice the absence of significant edge features}
+\end{figure}
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=12cm]{images/lbp_cond1}}
+\caption[LBP for a Condendation or Water well sample] {LBP for a Condensation or Water well sample.  Notice the close similarity with the texture of Negative samples.  A factor which we will discuss in the results}
+\end{figure}
+
+While the LBP does seem to provide useful features that can be used to train the model, it appears to have the following limitations: 
+
+\begin{enumerate}
+\item The Crop region for each well was a rectangle and a circle, therefore the outline of the well boundaries or borders were also included in the LBP region.  While this is due to the choice of the image processing approach used to extract the well region, it is a not a limitation of the LBP approach itself.  Future image processing techniques could focus on LBP analysis of the bounding circle region itself.     
+
+\item There does not seem to be any noticeable texture difference between Negative and Condentation samples.    The presence of a water bubbles on what is inherently a negative well does not seen to yield any noticeable difference in textures.  This could explain some of the eventual results seen in classifying a well as a Negative or Water (Condensation)
+
+\subsection{Limitations in the use of contours to extract region of interest in Texture analysis using LBP} 
+
+This section describes the use of contours to extract the region of interest within area within a well for subsequent LBP analysis.   While the Hough Circle approach described earlier allowed for all pixels within the area of interest of a well to be extract, texture analysis requires not just the pixel values but the location information to be preserved, in order for LBP to infer textures based on difference in intensities of neighbouring pixel for every pixel.   
+
+The approach used for this for to identify the enclosing rectangular contours for every well image.    As can be seen in the image below, this causes additional, non-significant areas of the image to be included for LBP analysis as well, such as the rim or well borders.   This is expected to affect the classification accuracy. 
+As can be seen in the images below, both enclosing rectangles and enclosing circles were attempted which includes all the contour points within the image.   Both resulted in the inclusion of extraneous regions within the region of interest. 
+
+\lstinputlisting[language=Python, firstline=119, lastline=137, frame=single]
+{code/load_training_data.py}
+
+To overcome this, it is suggested to use an approach that does not depend on contour analysis, but some other technique that preserves the shape and location information of every pixel.  This is identified as an area for further research. 
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=8cm]{images/mask}}
+\caption[Extracted region of interest for histogramming] {Circular region of a well extracted using masking and Hough Circle Technique for shape detection}
+\end{figure}
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=8cm]{images/crop}}
+\caption[Extracted region of interest for texture analysis] {Bounding rectangular region extracted with contour analysis and used for LBP. Notice presence of well borders which can affect the LBP analysis}
+\end{figure}
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[width=8cm]{images/crop-contour}}
+\caption[All contours drawn within the region of interest] {Other contours are visible as well.  The image was thresholded using a pixel value of 90 to identify contours of light coloured areas or cloudy sections of the pixels.  Notice presence of well borders}
+\end{figure}
+
+\end{enumerate}
+
+\subsection{Feature Engineering Using HSV values of each well} 
+
+In this approach, the HSV (hue, saturation, value) color model was used to analyse the different image classes and extract useful features that could be used in the image classification task. 
+
+It is easier to represent a color in HSV than in BGR color space. The characteristics generally used to distinguish one color from another are Brightness, Hue and Saturation.   
+
+Hue\cite{woods} is an attribute associated with the dominant wavelength in a mixture of light waves.  Hue represents dominant color as perceived by an observer.     Saturation refers to the relative purity or the amount of white light mixed with the hue.   The degree of saturation is inversely proportional to the amount of white light added. 
+
+As an example, the HSV values for a Positive and Negative class are shown below. 
+
+As can be seen in the visual comparison of the HSV histograms of both classes, there does appear to be distinct differences in HSV across both class types. 
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Histogram of Hues]{\label{fig:mdright}{\includegraphics[width=0.33\textwidth, height=4cm]{images/positive_hue}}} %\hfill
+\subfloat[Histogram of Saturations]{\label{fig:mdleft}{\includegraphics[width=0.33\textwidth, height=4cm]{images/positive_saturation}}}
+\subfloat[Histogram of Values]{\label{fig:mdleft}{\includegraphics[width=0.33\textwidth, height=4cm]{images/positive_value}}}
+\caption{100 Bin Histogram of HSV Values for a Positive sample}
+\label{fig:subfigures}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[[Histogram of Hues]{\label{fig:mdright}{\includegraphics[width=0.33\textwidth, height=4cm]{images/negative_hue}}} %\hfill
+\subfloat[Histogram of Saturations]{\label{fig:mdleft}{\includegraphics[width=0.33\textwidth, height=4cm]{images/negative_saturation}}}
+\subfloat[Histogram of Values]{\label{fig:mdleft}{\includegraphics[width=0.33\textwidth, height=4cm]{images/negative_value}}}
+\caption{100 Bin Histogram of HSV Values for a Negative sample}
+\label{fig:subfigures}
+\end{figure}
+
+For the purposes of model training, the V (Values) were selected and the testing results discussed later in this document are based on the V values.   However, the Hue and Saturation histograms could also be used to train the model.  This comparative analysis and contribution of H, S and V values to the model effectiveness is an area identified for future work.   
+
+
+\chapter{Learning, Inferencing and Validation with Machine Learning Models}
+
+Two supervised learning algorithms for the classification task were chosen for the classification task:
+\begin{enumerate}
+\item Gaussian Mixture Model (GMM) Probablistic Classifier - A parametric classification method
+\item Random Forest Classifier -  A non-parametric classification method
+\end{enumerate}
+The use of these classification models are described in the following sections
+\section{Gaussian Mixture Model (GMM) Classifier}
+A Gaussian mixture model (GMM), also referred to as a Mixture of Gaussian (MoG) attempts to find a mixture of multi-dimensional Gaussian probability distributions that best model any input dataset.    For the problem at hand, separate GMM models were constructed using the training data for each of the desired classification types, namely: 
+\begin{enumerate}
+\item Positive Class
+\item Negative Class
+\item Condensation Class
+\item Contamination Class
+\end{enumerate}
+
+The data within each of these classes are described as a weighted sum of K normal distributions
+
+\[
+Pr(x|\theta)=\sum_{k=1}^{K} \lambda_k  Norm_x[\mu_k,\Sigma_k]
+\]
+
+where \(\mu_{1..K}\) and \(\Sigma_{1..K}\) are the means and covariances of the normal distributions representing the features within the data and \(\lambda_{1..K}\) are positive valued weights that sum to one.  The mixture of Gaussians model describes complex multi-modal probability distributions densities by combining simpler constituent distributions. 
+
+The GMM function within the scikit-learn package learns the parameters \( 
+\theta = \{ \mu_k, \Sigma_k, \lambda_k \}
+\)
+for each value of k from 1 to K from the training data \( 
+\{x_i\}
+\)
+
+\subsection {Training the Gaussian Mixture Models}
+
+As mentioned earlier, a separate GMM model was trained for each of the four different classification types.  For example, a GMM model for the Positive class was trained on the well samples of positive cultures only (those with cloudy formation).   Similarly the GMM model for the Negative class was trained on well samples of negative cultures. 
+This allowed each GMM model to model the overall distribution of training data in that class. 
+
+Different values of K (number of gaussian distributions) for each Mixture of Gaussian per sample were tried out to determine the optimum value for K.       Determining the optimum value of K per class was key to avoid over-fitting. 
+
+Analytic criteria such as Akaike information criterion (AIC) or the Bayesian information criterion (BIC) was also used to determine the value optimum value of K.   Scikit-Learn's GMM estimator includes built-in methods that compute both of these. 
+
+\subsection {Using the Akaike information criterion and Bayesian information criterion}
+The Akaike information criterion (AIC) is an estimator of the relative quality of statistical models for a given set of data. Given a collection of models for the data, AIC estimates the quality of each model, relative to each of the other models. Thus, AIC provides a means for model selection.
+AIC is founded on information theory. When a statistical model is used to represent the process that generated the data, the representation will almost never be exact; so some information will be lost by using the model to represent the process. AIC estimates the relative information lost by a given model: the less information a model loses, the higher the quality of that model. (In making an estimate of the information lost, AIC deals with the trade-off between the goodness of fit of the model and the simplicity of the model.)
+
+Given a set of candidate models for the data, the preferred model is the one with the minimum AIC value. Thus, AIC rewards goodness of fit (as assessed by the likelihood function), but it also includes a penalty that is an increasing function of the number of estimated parameters. The penalty discourages overfitting, because increasing the number of parameters in the model almost always improves the goodness of the fit.
+
+In statistics, the Bayesian information criterion (BIC) or Schwarz information criterion (also SIC, SBC, SBIC) is a criterion for model selection among a finite set of models; the model with the lowest BIC is preferred. It is based, in part, on the likelihood function and it is closely related to the Akaike information criterion(AIC).
+
+When fitting models, it is possible to increase the likelihood by adding parameters, but doing so may result in overfitting. Both BIC and AIC attempt to resolve this problem by introducing a penalty term for the number of parameters in the model; the penalty term is larger in BIC than in AIC.
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Positive Class]{\label{fig:mdright}{\includegraphics[width=0.45\textwidth]{images/aic_positive}}} %\hfill
+\subfloat[Negative Class]{\label{fig:mdleft}{\includegraphics[width=0.45\textwidth]{images/aic_negative}}}
+\caption{AIC and BIC curves for Positive and Negative classes}
+\label{fig:subfigures}
+\end{figure}
+
+The optimal value of K is the value that minimizes the AIC or BIC. The above AIC and BIC curves indicate that a low value of K (number of gaussian components per class or clusters) is preferable. The BIC recommends a simpler model.
+
+Notice the important point: this choice of number of components measures how well GMM works as a density estimator, not how well it works as a clustering algorithm.   Literature\cite{jake} recommends the use of GMM primarily as a density estimator, and to use it for clustering only when warranted within simple datasets.  
+
+This could explain why the AIC and BIC curves above are not particularly useful in this problem which involves complex data sets. 
+
+A feature minimization technique like PCA (Principle Components Analysis) could be used to simplify or reduce the data sets before fitting a GMM model to it.   This is identified as a future are of exploration. 
+
+\subsection {Training or Fitting the GMM model for each category}
+
+The fitting of a GMM model to the training data samples for each of the four classes was done as below.  
+Here you see the GMM model, called clf for classifier, being trained for the positive class training data.    
+
+\lstinputlisting[language=Python, firstline=104, lastline=105, frame=single]
+{code/train_gmm_all.py}
+
+The hyperparameter \emph{covariance\_type}  controls the degrees of freedom in the shape of each cluster or class.  
+
+The setting \emph{covariance\_type="full"}, allows each cluster or to be modelled as an ellipse with arbitrary orientation, providing maximum flexibility in the fit.    Although computationally expensive, it was possible to train the models on an Intel i7, 1.9 GHz, 16GB RAM Windows machine. 
+
+\subsection {Inferencing from the GMM model for each category}
+After training or fitting each of the 4 GMM models to their respective training data sets, the inferencing process then scores the new sample (from the validation or test data set) to be classified, with each of the 4 models.    The model score represents the Log probability of the new sample.  This is done with the \emph{score\_samples} method.   The model with the maximum log probability for the new data is selected as the class label. 
+
+The GMM model also provides an average log-likelihood of the new sample.   Given that this is a likelihood measure and not a probability measure, it remains to be explored how this likelihood measure can be used to improve the classification accuracy. 
+
+\lstinputlisting[language=Python, firstline=127, lastline=139, frame=single]
+{code/inferencing_extended.py}
+
+The above code snippet shows the scoring process for the new sample using each of the 4 GMM models. 
+
+As a future extension, it is also proposed to use the Bayesian Gaussian Mixture approach which  implements a variant of the Gaussian mixture model with variational inference algorithms.
+
+Variational inference is an extension of expectation-maximization that maximizes a lower bound on model evidence (including priors) instead of data likelihood. The principle behind variational methods is the same as expectation-maximization (that is both are iterative algorithms that alternate between finding the probabilities for each point to be generated by each mixture and fitting the mixture to these assigned points), but variational methods add regularization by integrating information from prior distributions. 
+
+Due to its Bayesian nature, the variational algorithm needs more hyper-parameters than expectation-maximization, the most important of these being the concentration parameter \emph{weight\_concentration\_prior}. 
+
+Specifying a low value for the concentration prior will make the model put most of the weight on few components set the remaining components weights very close to zero. High values of the concentration prior will allow a larger number of components to be active in the mixture.
+
+The key benefits of the variational inference approach for this task are expected to be: 
+
+\begin{enumerate}
+\item Automatic selection of number of gaussian components:
+ 	When weight\_concentration\_prior is small enough and n\_components is larger than what is found necessary by the model, the Variational Bayesian mixture model has a natural tendency to set some mixture weights values close to zero. This makes it possible to let the model choose a suitable number of effective components automatically. Only an upper bound of this number needs to be provided. Note however that the “ideal” number of active components is very application specific and is typically ill-defined in a data exploration setting.
+
+\item Less sensitivity to the number of parameters:
+ 	Unlike finite models, which will almost always use all components as much as they can, and hence will produce wildly different solutions for different numbers of components, the variational inference with a Dirichlet process prior (weight\_concentration\_prior\_type='dirichlet\_process') won’t change much with changes to the parameters, leading to more stability and less tuning.
+
+\end{enumerate}
+
+\section{Random Forest Classifier}
+
+Random forests are an example of an ensemble learner built on decision trees. 
+Decision Trees (DTs) are a non-parametric supervised learning method used for classification and regression. The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features.
+
+In Python's Scikit-Learn package, such an optimized ensemble of randomized decision trees is implemented in the RandomForestClassifier estimator, which takes care of all the randomization automatically. 
+
+A Random Forest with 4 decision trees was used for initial testing.        Within the sample data for training, a cross validation set of 80:20 was created i.e. 80\% of the sample data was used for training and 20\% for validation. 
+
+The results with the validation set were encouraging at 76.19\%.   
+
+K-fold cross validation was used to analyse the hyper-parameters while retaining generalization accuracy.   Here, the training set is split into k smaller sets. The following procedure is followed for each of the k “folds”:
+\begin{enumerate}
+\item A model is trained using k\textendash1 of the folds as training data
+
+\item The resulting model is validated on the remaining part of the data (i.e., it is used as a test set to compute a performance measure such as accuracy). With a K-fold value of K=5, the following accuracy levels were obtained with a mean accuracy of 73.87\% with a standard deviation of 12.55\%
+\end{enumerate}
+
+\begin{table} [!htbp]
+  \centering
+\begin{tabular}{cr}
+\hline
+\multicolumn{2}{c}{5-Fold Accuracy Score} \\
+\cline{1-2}
+ Cross Fold No. & Accuracy \\
+\hline
+ 1    & 62.50\%      \\
+ 2       & 77.78\%      \\
+ 3     & 90.32\%    \\
+ 4      & 82.26\%      \\
+ 5     & 58.06\%  \\
+\hline
+\end{tabular}
+\caption{Variation in accuracy levels for each fold in 5-fold cross validation}
+\end{table}
+
+A Validation Curve was used plot the influence of a single hyperparameter on the training score and the validation score to find out whether the estimator is overfitting or underfitting for some hyperparameter values.  The hyperparameter in this case is the number of trees in the random forest.
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics[scale=0.75] {images/validation_curve_randomforest_1}} \hfill
+\caption[Validation Curve for Random Forest classifier] {A learning curve with training and validation accuracy scores on two datasets.   The solid lines show the results with a larger data set (80\% of sample data), while the fainter dashed lines show the results with a smaller data set (20\% of sample data).  }
+\end{figure}
+
+It must be noted that although the well samples are different between the Training and Validation sets, they all come from the same set of images.     This could possibly explain the high validation accuracy which was not necessarily the case when the model was run on the test data which came from a completely different set of images. 
+
+The following table lists the number of training samples within each category that were available and the numbers that was actually utilized for training purposes. 
+
+\begin{table}[!htbp]
+  \centering
+\begin{tabular}{ | l | r | r | }
+\hline
+\multicolumn{3}{| c |}  {Number of training samples used at different stages} \\
+\cline{1-3}
+ Class Lablel & Number of total training samples available & Number of training samples utilized \\
+\hline
+  Positive   & 158  & 100      \\
+ Negative    & 929  & 100      \\
+ Condensation  & 97  & 97      \\
+ Contamination    & 16  & 16      \\
+\hline
+\end{tabular}
+\caption{Number of training samples}
+\end{table}
+
+
+
+\chapter{Classification results on a Test data set}
+
+The results discussed in this section were obtained in a test data set comprising of 4 test images which were neither present in the training data set nor the validation data set.    Therefore, these were completely new or unseen images for the trained classifiers. 
+
+\section{Results with GMM}
+
+Initial results with the GMM gave the following results:
+
+\begin{enumerate}
+
+\item Equal values of K (number of Gaussians) for each of the 4 categories. 
+
+\begin{table} [!htbp]
+  \centering
+\begin{tabular}{ |l|l| }
+  \hline
+  \multicolumn{2}{|c|}{K Values} \\
+  \hline
+  Positive & K = 8 \\
+  Negative & K = 8 \\
+  Water & K = 8 \\
+  Contamination & K = 8 \\
+  \hline
+\end{tabular}
+\caption{Initial number of Gaussians per category}
+\end{table}
+
+As can be seen in the confusion matrix, the accuracy within the Positive samples was high.  Within the Negative class, there were a high number of false positives with 47 of them being classified were classified as Positive.   Interestingly, within the Water class itself, a significant number of them (8) were classified as Negative. 
+
+\includegraphics[width=8cm]{images/GMM_K_8}
+
+\item Differing values of K (number of Gaussians) for each of the 4 categories.  
+
+In this test, a different values of K were used for each category.   
+
+\begin{table} [!htbp]
+  \centering
+\begin{tabular}{ |l|l| }
+  \hline
+  \multicolumn{2}{|c|}{K Values} \\
+  \hline
+  Positive & K = 15 \\
+  Negative & K = 30 \\
+  Water & K = 8 \\
+  Contamination & K = 3 \\
+  \hline
+\end{tabular}
+\caption{Modified number of Gaussians per category}
+\end{table}
+As can be seen in the confusion matrix below, there was a very high accuracy in the classification of the Water samples likely due to the ability of the model to generalize better due to a lower value of K. 
+
+The Negative class on the other hand yielded a very high error rate with most of the Negatives being classified as Water.   Therefore a higher value of  K for Negative did not yield good results. 
+
+\includegraphics[width=8cm]{images/GMM_diff_k}
+
+
+%\caption[GMM Confusion Matrix - Equal values of K] {GMM Confusion Matrix - Equal values of K}
+
+
+
+\end{enumerate}
+
+\section{Results with Random Forest Classifier}
+
+\includegraphics[width=8cm]{images/RF_v1}
+
+\begin{enumerate}
+\item \textbf{Positive Class}
+
+A high degree of accuracy was seen for positive classes.  Of 26 test samples, 23 were classified correctly. 
+
+\item \textbf{Negative Class}
+
+
+Negative classes continue to suffer missclassification into nearly equal number of positive and water classes. 
+
+\item \textbf{Condensation Class}
+
+Just over 50\% of the samples with water or condensation in them were classified correctly. This is similar to the results of the Negative class.  It is possible that the causes of missclassification of Negative into Water samples is related to the causes of mis-classification of Water into Negative.    Therefore, an improvement in the accuracy of Negative or Water classification will contribute significantly to the overall improvement of accuracy. 
+
+\item \textbf{Contamination Class}
+
+No classes of Contamination were available in the test sample. 
+
+\end{enumerate}
+
+
+\chapter{Approaches to improve classification accuracy}
+
+Having discussed the image processing and classification capabilities of the overall solution, this section discusses ways in which the classification accuracy can be further improved, in particular for the Negative and Water (condensation) classes which saw the highest number of classification errors.   
+
+I believe the classification accuracy can be significantly improved from the current levels as the extent of model optimization done till this point was fairly minimal due to the greater emphasis laid on deeply understanding the problem domain; then identifying, selecting and extracting a number of features relevant to the learning task and finally comparing two different types of machine learning models with respect to their classification accuracy, 
+
+The task remaining then to explore a set of training data and model hyper/-parameter optimization techniques that yield a much higher level of classification accuracy. 
+
+\section{Feature optimization and model tuning approaches identified}
+
+\begin{enumerate}
+
+\item  \textbf{Texture analysis over a circular region of interest instead of nearest enclosing rectangular boundary}
+
+Use the pre-extracted circular region of the image for texture analysis (as is done currently using Local Binary Patterns) instead of re-extracting the bounding rectangular region.   This will prevent the well borders from being included and could improve the classification accuracy. 
+
+\item \textbf{Use of number of contours as an additional feature}
+
+The number of contours itself within a particular image could be a useful feature for classification.   Clearly, a positive well image will have more contour shapes than other classes.   This is a feature that can be used in training the model.  
+
+\item  \textbf{Use of Hue and Saturation as feature descriptors for brightness of a well}
+
+A combination of H, S and V histogram values could be used to improve the classification accuracy.   Using all the 3 channels could result in an improvement in testing results instead of just the V (Value) channel used to train the current model.    
+
+\item  \textbf{Use of a Feature Minimization technique }
+
+A Feature Minimization technique like PCA (Principle Components Analysis) can be used to simplify the data sets.  The impact of this on the performance of the learning models is identified as a further area of work. 
+
+\item  \textbf{ Larger training and testing data sizes }
+
+Of more than 600 images available at this point, only 25 images were used for training which represents just 4.1\% of the overall data set.  It is possible that a larger training data set allows for a more generalized model to be trained.    For testing, only 4 images selected outside of the 25 training images.  This is a very small portion of the overall data available and the classification accuracy discussed above may not be sufficiently representative of the full data set.  
+
+\begin{figure} [!htbp]
+\centering
+ \fbox{\includegraphics [scale=0.75] {images/learning_curve_random_forest_classifier}} %\hfill
+\caption[Learning Curve for Random Forest classifier] {A learning curve with training and validation accuracy scores with different training data sizes.     }
+\end{figure}
+
+The Learning Curve above shows a monotonic increase in cross-validation scores with increasing amounts of training data.   Even at the maximum tra
+One of the constraints encountered in this project was the manual effort needed to update the training data xls with the training labels for each of the 48 labels in each well.     This time spent on this was limited by the capacity of one individual, i.e. myself.   The size of the training data available could be dramatically enlarged by enlisting additional resources to label the training data.    Effort can also be directed towards labelling more training samples for very low occurence categories like Contaminated wells. 
+
+\item \textbf{Training Gaussian Models for each of the different feature categories per class}
+
+As was discussed in the the exploration and visualizations of the each of the three key feature categories per class - Histogram of Grayscale values,  Histogram of Textures and Histogram of Brightness (using HSV values), the shapes of the histogram distributions of each of these feature categories differ significantly from each other.     Therefore, a better fitting GMM can be obtained by using a separate GMM for each feature category instead of a single GMM model for all three feature categories.     
+
+For the inferencing step, a mean of the log probabilities from each of the three GMMs can be taken instead of the single log probabillity score per category iin the current approach.   
+
+\item \textbf{Use of the trained GMM as a generative model to generate additional training samples}
+
+As the GMM is primarily a generative model, it can be used to generate additional training samples per category.    The generated or synthetic training data can then be further transformed using transformations like scaling, rotations or affine transformations to increase the variety within the generated training samples.     This will mitigate the need for manual labelling of the training samples.  
+
+\item \textbf{Use of GridSearch to find optimum values for the model hyper-parameters}
+
+Hyper-parameters are parameters that are not directly learnt within estimators (i.e. the specific scikit-learn implementation of a machine learning algorithm).  In scikit-learn they are passed as arguments to the constructor of the estimator classes. 
+
+For example, in the RandomForestClassifier estimator, the main parameters to adjust when using these methods is \emph{n\_estimators} and \emph{max\_features}. The former is the number of trees in the forest. The larger the better, but also the longer it will take to compute. In addition, note that results will stop getting significantly better beyond a critical number of trees. The latter is the size of the random subsets of features to consider when splitting a node. The lower the greater the reduction of variance, but also the greater the increase in bias. 
+
+For instance, an initial tuning of the hyper-parameters resulted in a significant increase in the accuracy scores as below. 
+
+\begin{table}[!htbp]
+  \centering
+\begin{tabular}{ | l | r | r | }
+\hline
+\multicolumn{3}{| c |}  {Changes in hyper-parameters with resulting increase in accuracy} \\
+\cline{1-3}
+ Hyper-parameter  & Previous value & Modified value \\
+\hline
+  \emph{n\_estimators}    &15  & 150      \\
+ \emph{max\_features}    &4  & 30      \\
+\emph{max\_depth}    &100  & None      \\
+\emph{min\_samples\_split}    &8  & 2      \\
+\hline
+\end{tabular}
+\caption{Changes to select hyper-parameter values in the Random Forest Classifier}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[With previous values of hyper-parameters]{\label{fig:mdright}{\includegraphics[width=0.45\textwidth]{images//hyperparameter_randomforest_old}}} %\hfill
+\subfloat[With modified values of hyper-parameters]{\label{fig:mdleft}{\includegraphics[width=0.45\textwidth]{images/hyperparameter_randomforest_new}}}
+\caption{Confusion Matrix for the two different sets of hyper-parameter values}
+\label{fig:subfigures}
+\end{figure}
+
+\item Term for false positives and false negatives, bias and variance
+\item The formula that richard provided
+\item Metrics report per class
+
+\end{enumerate}
+
+%\begin{cpp}
+%int main(){
+%	cout << "Hello World" << endl;
+%}
+%\end{cpp}
 
 
 \nocite{*}
 
 \bibliography{references}\addcontentsline{toc}{chapter}{References}
+
+\begin{thebibliography}{9}
+
+\bibitem{cv}
+  Simon J.D. Prince,
+  \textit{Computer vision: models, learning and inference},
+  Cambridge University Press,
+  2012.
+
+\bibitem{jake}
+  Jake VanderPlas,
+  \textit{Python Data Science Handbook},
+  O'Reilly Media,
+  2016.
+
+\bibitem{woods}
+  Rafael C. Gonzalez and Richard E. Woods,
+  \textit{Digital Image Processing},
+  Prentice Hall
+
+\bibitem{hastie}
+  Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani
+  \textit{An Introduction to Stastical Learning with Applications in R},
+  Springer Texts in Statistics,
+   7th Printing	
+\end{thebibliography}
 \end{document}
